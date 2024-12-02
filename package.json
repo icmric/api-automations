@@ -10,7 +10,8 @@
 	],
 	"type": "module",
 	"files": [
-		"dist"
+		"dist",
+		"src"
 	],
 	"directus:extension": {
 		"type": "bundle",
@@ -21,13 +22,13 @@
 		"entries": [
 			{
 				"type": "module",
-				"name": "automations",
+				"name": "automations-module",
 				"source": "src/automations/index.js"
 			},
 			{
 				"type": "endpoint",
-				"name": "sources",
-				"source": "src/sources/index.js"
+				"name": "sources-endpoint",
+				"source": "src/sources-endpoint/index.js"
 			}
 		],
 		"host": "^10.10.0"

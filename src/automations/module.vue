@@ -106,7 +106,7 @@ export default {
 		return { page_title, page_body, all_pages, formData, optionsSet, rspJsonStr, showCopiedPopup, formHeadings, submitForm, debugButton, showInNewTab, copyToClipboard, openResource, };
 
 		// Recursively find form fields in the data structure
-		function recursiveFind(obj, prepend = "", index = 0, ignoredKeys = ["other_resources"]) {
+		function recursiveFind(obj, prepend = "", index = 0, ignoredKeys = ["additional_automations"]) {
 			if (!formData.value[index]) {
 				formData.value[index] = {};
 			}
@@ -133,7 +133,7 @@ export default {
 		}
 
 		function allowUserInput(objToCheck) {
-			let valuesToCheck = ["reqAccountability", "$tool", "prevApiRsp", "apiResponse"];
+			let valuesToCheck = ["reqAccountability", "$tool", "prevResponses", "apiResponse"];
 			for (let i = 0; i < valuesToCheck.length; i++) {
 				if (objToCheck.includes(valuesToCheck[i])) {
 					return false;
@@ -146,22 +146,23 @@ export default {
 		async function render_page(page) {
 			clearValues()
 			if (page === 'home') {
-				page_title.value = 'Tools';
-				page_body.value = 'Please select a tool on the left to get started!';
+				page_title.value = 'Automations';
+				page_body.value = 'Please select an automation on the left to get started!';
 			} else {
 				try {
-					const rsp = await api.get(`/items/resources?fields=*,retrieves.*,other_resources.*.*.*&filter[title][_eq]=${page}`);
+					console.log("Fetching pages");
+					const rsp = await api.get(`/items/automations?fields=*,sources.*,additional_automations.*.*.*&filter[title][_eq]=${page}`);
 					if (rsp.data.data) {
 						rsp.data.data.forEach(item => {
 							rawPageName = item.title;
 							page_title.value = transformTitle(item.title);
 							page_body.value = item.description;
-							rawRequest = item.main;
+							rawRequest = item.body;
 							recursiveFind(rsp.data.data[0], "", 0);
 							pageID = item.id;
 
 							// Handle linked resources
-							item.other_resources.forEach((resource, index) => {
+							item.additional_automations.forEach((resource, index) => {
 								optionsSet.value[index + 1] = new Set([]);
 								formData.value[index + 1] = {};
 								formHeadings.value[index + 1] = resource.item.title;
@@ -187,10 +188,10 @@ export default {
 			// This and openResource are done dodgily, resources is hard coded
 			// works for now, will need to be updated to be dynamic when making renders
 			// Create invisible field in each item which has the name of the group (resources, renders, etc)??
-			api.get('/items/resources?fields=*,displayGroup.*').then((rsp) => {
+			api.get('/items/automations?fields=*,display_group.*').then((rsp) => {
 				all_pages.value = [];
 				rsp.data.data.forEach(item => {
-					let group = item.displayGroup;
+					let group = item.display_group;
 					if (group == null) {
 						group = "Misc";
 					}
@@ -260,6 +261,8 @@ export default {
 				"prevResponses": prevResponses.value,
 				"finalReq": finalReq,
 			};
+
+			console.log(buildApiUrl(false, apiReqBody.title));
 
 			await api.post(buildApiUrl(false, apiReqBody.title), postReqData).then((rsp) => {
 				let jsonRsp = rsp.data;
@@ -333,7 +336,7 @@ export default {
 
 		function buildApiUrl(getRequest = false, pageName) {
 			let urlDestination = pageName || rawPageName;
-			let url = '/sources/' + urlDestination;
+			let url = '/sources-endpoint/' + urlDestination;
 
 			if (getRequest) {
 				// only used for GET requests
@@ -355,7 +358,7 @@ export default {
 		// unused????
 		function openResource() {
 			try {
-				window.open("/admin/content/resources/" + pageID);
+				window.open("/admin/content/automations/" + pageID);
 			} catch (error) {
 				rspJsonStr.value = "Error opening resource";
 			}
