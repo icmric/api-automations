@@ -38,3 +38,27 @@ extra_values repeater
 additional_automations
 [additional_automations](https://raw.githubusercontent.com/icmric/api-automations/refs/heads/main/images/aditional-automations.jpg)
 
+### sources
+[sources overview](https://raw.githubusercontent.com/icmric/api-automations/refs/heads/main/images/sources-overview.jpg)
+
+* title: Title of the source (Input - String)
+* description: Description of the source (Textarea - Text)
+* method: API request type (only GET and POST are currently supported) (Dropdown, GET - GET, POST - POST)
+* url: Destination URL for the API call (Input - String)
+* header: Repeater field for adding headers to the request (Repeater, key - Input String, value - Input String)
+* request: JSON body of the API request (Code - JSON)
+* transform: Transform the output data into this format (Code - JSON)
+
+## Example Setup
+
+### Example Automation
+[additional_automations](https://raw.githubusercontent.com/icmric/api-automations/refs/heads/main/images/example-automation-p1.jpg)
+
+[additional_automations](https://raw.githubusercontent.com/icmric/api-automations/refs/heads/main/images/example-automation-p2.jpg)
+
+### Example Source
+[additional_automations](https://raw.githubusercontent.com/icmric/api-automations/refs/heads/main/images/example-source-p1.jpg)
+
+[additional_automations](https://raw.githubusercontent.com/icmric/api-automations/refs/heads/main/images/example-source-p2.jpg)
+
+[additional_automations](https://raw.githubusercontent.com/icmric/api-automations/refs/heads/main/images/example-source-p3.jpg)
