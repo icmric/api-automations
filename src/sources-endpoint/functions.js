@@ -36,7 +36,6 @@ async function useTool(req, context) {
         return itemx.readByQuery({ fields: ['title'] });
     }
 
-    //return datax;
     let apiRequest = datax[0].source;
     let tool = datax[0];
 

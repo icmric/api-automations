@@ -1,6 +1,6 @@
 {
 	"name": "api-automations",
-	"description": "Please enter a description for your extension",
+	"description": "Perform API calls with input fields and request chaining",
 	"icon": "extension",
 	"version": "1.0.0",
 	"keywords": [
