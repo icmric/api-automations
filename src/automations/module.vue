@@ -132,6 +132,7 @@ export default {
 			}
 		}
 
+		// Check if the placeholder is allowed to be used for user input
 		function allowUserInput(objToCheck) {
 			let valuesToCheck = ["reqAccountability", "$tool", "prevResponses", "apiResponse"];
 			for (let i = 0; i < valuesToCheck.length; i++) {
@@ -184,10 +185,8 @@ export default {
 			}
 		}
 
+		// Fetch all pages for the navigation sidebar
 		function fetch_all_pages() {
-			// This and openResource are done dodgily, resources is hard coded
-			// works for now, will need to be updated to be dynamic when making renders
-			// Create invisible field in each item which has the name of the group (resources, renders, etc)??
 			api.get('/items/automations?fields=*,display_group.*').then((rsp) => {
 				all_pages.value = [];
 				rsp.data.data.forEach(item => {
@@ -248,6 +247,7 @@ export default {
 			for (const group in formData.value) {
 				var index = parseInt(group);
 				var apiHeading = formHeadings.value[index] || rawPageName;
+				// Update rspJsonStr to provide feedback to the user about where it is up to
 				rspJsonStr.value = "Performing request " + (index + 1) + "/" + formData.value.length + " for " + apiHeading;
 				await makeApiRequest(formData.value[index], index == formData.value.length - 1, apiHeading);
 			};
@@ -355,7 +355,7 @@ export default {
 			return url.replace("$request.", "");
 		}
 
-		// unused????
+		// Opens the automation definition in a new tab
 		function openResource() {
 			try {
 				window.open("/admin/content/automations/" + pageID);
