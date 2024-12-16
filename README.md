@@ -9,6 +9,8 @@ Api Automations is a Directus extension that allows users to make API calls with
 ## Setup
 Once the package is installed, first create the collections outlined below, then enable the module in Settings -> Settings -> Modules -> Automations
 
+[Enable the Module](https://raw.githubusercontent.com/icmric/api-automations/refs/heads/main/images/add_bundle.png)
+
 **Key Terms**
 * Source: General use API endpoint
 * Automation: Specialised use case of a source
